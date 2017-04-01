@@ -18,6 +18,7 @@ export default class Todo extends Component {
         this.marcaFeito = this.marcaFeito.bind(this);
         this.marcaDesfeito = this.marcaDesfeito.bind(this);
         this.fazBusca = this.fazBusca.bind(this);
+        this.limpaBusca = this.limpaBusca.bind(this);
 
         this.refresh();
     }
@@ -58,12 +59,27 @@ export default class Todo extends Component {
         this.refresh(this.state.descricao);
     }
 
+    limpaBusca() {
+        this.refresh();
+    }
+
     render() {
         return (
             <div>
                 <PageHeader titulo="Tarefas" subtitulo="Cadastro"/>
-                <TodoForm descricao={this.state.descricao} funcaoMudanca={this.aceitaMudanca} funcaoAdd={this.adicionaTarefa} funcaoBusca={this.fazBusca}/>
-                <TodoList funcaoFeito={this.marcaFeito} funcaoDesfeito={this.marcaDesfeito} funcaoRemover={this.removeTarefa} lista={this.state.lista} />
+                <TodoForm
+                    descricao={this.state.descricao}
+                    funcaoMudanca={this.aceitaMudanca}
+                    funcaoAdd={this.adicionaTarefa}
+                    funcaoBusca={this.fazBusca}
+                    funcaoLimpar={this.limpaBusca}
+                />
+                <TodoList
+                    funcaoFeito={this.marcaFeito}
+                    funcaoDesfeito={this.marcaDesfeito}
+                    funcaoRemover={this.removeTarefa}
+                    lista={this.state.lista}
+                />
             </div>
         )
     }

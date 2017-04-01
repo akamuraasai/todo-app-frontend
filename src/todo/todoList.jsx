@@ -18,11 +18,11 @@ export default props => {
         ));
     };
 
-    return (<table className="table">
+    return (<table className="table listagem">
                 <thead>
                     <tr>
                         <th>Descrição</th>
-                        <th>Ações</th>
+                        <th className="col-xs-2 col-sm-1 col-md-1 col-lg-1">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
