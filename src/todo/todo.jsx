@@ -17,13 +17,16 @@ export default class Todo extends Component {
         this.removeTarefa = this.removeTarefa.bind(this);
         this.marcaFeito = this.marcaFeito.bind(this);
         this.marcaDesfeito = this.marcaDesfeito.bind(this);
+        this.fazBusca = this.fazBusca.bind(this);
 
         this.refresh();
     }
 
-    refresh() {
-        Axios.get(`${URL}?sort=-criadoEm`)
-             .then(dados => this.setState({...this.state, descricao: '', lista: dados.data}));
+    refresh(descricao = '') {
+        const pesquisa = descricao ? `&descricao__regex=/${descricao}/` : '';
+
+        Axios.get(`${URL}?sort=-criadoEm${pesquisa}`)
+             .then(dados => this.setState({...this.state, descricao, lista: dados.data}));
     }
 
     aceitaMudanca(e) {
@@ -38,24 +41,28 @@ export default class Todo extends Component {
 
     removeTarefa(tarefa) {
         Axios.delete(`${URL}/${tarefa._id}`)
-             .then(dados => this.refresh());
+             .then(dados => this.refresh(this.state.descricao));
     }
 
     marcaFeito(tarefa) {
         Axios.put(`${URL}/${tarefa._id}`, { ...tarefa, feito: true })
-             .then(dados => this.refresh());
+             .then(dados => this.refresh(this.state.descricao));
     }
 
     marcaDesfeito(tarefa) {
         Axios.put(`${URL}/${tarefa._id}`, { ...tarefa, feito: false })
-            .then(dados => this.refresh());
+            .then(dados => this.refresh(this.state.descricao));
+    }
+
+    fazBusca() {
+        this.refresh(this.state.descricao);
     }
 
     render() {
         return (
             <div>
                 <PageHeader titulo="Tarefas" subtitulo="Cadastro"/>
-                <TodoForm descricao={this.state.descricao} funcaoMudanca={this.aceitaMudanca} funcaoAdd={this.adicionaTarefa}/>
+                <TodoForm descricao={this.state.descricao} funcaoMudanca={this.aceitaMudanca} funcaoAdd={this.adicionaTarefa} funcaoBusca={this.fazBusca}/>
                 <TodoList funcaoFeito={this.marcaFeito} funcaoDesfeito={this.marcaDesfeito} funcaoRemover={this.removeTarefa} lista={this.state.lista} />
             </div>
         )
