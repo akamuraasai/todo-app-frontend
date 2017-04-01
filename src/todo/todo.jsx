@@ -6,8 +6,14 @@ import TodoList from './todoList';
 export default class Todo extends Component {
     constructor(props) {
         super(props);
+        this.state = { descricao: '', lista: [] };
 
         this.adicionaTarefa = this.adicionaTarefa.bind(this);
+        this.aceitaMudanca = this.aceitaMudanca.bind(this);
+    }
+
+    aceitaMudanca(e) {
+        this.setState({...this.state, descricao: e.target.value});
     }
 
     adicionaTarefa() {
@@ -18,7 +24,7 @@ export default class Todo extends Component {
         return (
             <div>
                 <PageHeader titulo="Tarefas" subtitulo="Cadastro"/>
-                <TodoForm funcaoAdd={this.adicionaTarefa}/>
+                <TodoForm descricao={this.state.descricao} funcaoMudanca={this.aceitaMudanca} funcaoAdd={this.adicionaTarefa}/>
                 <TodoList />
             </div>
         )
