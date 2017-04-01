@@ -12,19 +12,21 @@ module.exports = {
         contentBase: './public',
     },
     resolve: {
-        extension: ['', '.js', '.jsx'],
+        extensions: ['', '.js', '.jsx'],
         alias: {
-            modules: __dirname + '/node_modules'
+            modules: __dirname + '/node_modules',
+            bootstrap_min_css: __dirname + '/node_modules/bootstrap/dist/css/bootstrap.min.css',
+            fontawesome_min_css: __dirname + '/node_modules/font-awesome/css/font-awesome.min.css'
         }
     },
     plugins: [
         new ExtTxtPg('app.css')
     ],
-    modules: {
+    module: {
         loaders: [{
             test: /.js[x]?$/,
             loader: 'babel-loader',
-            exclude: /node_modules/,
+            exclude: '/node_modules/',
             query: {
                 presets: ['es2015', 'react'],
                 plugins: ['transform-object-rest-spread']
