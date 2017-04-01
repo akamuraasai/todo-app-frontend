@@ -8,9 +8,11 @@ export default props => {
 
         return lista.map(tarefa => (
             <tr key={tarefa._id}>
-                <td>{tarefa.descricao}</td>
+                <td className={ tarefa.feito ? 'tarefa-concluida' : '' }>{tarefa.descricao}</td>
                 <td>
-                    <IconButton style="danger" icon="trash-o" onClick={() => props.funcaoRemover(tarefa)}/>
+                    <IconButton style="success" icon="check" onClick={() => props.funcaoFeito(tarefa)} hide={tarefa.feito} />
+                    <IconButton style="warning" icon="undo" onClick={() => props.funcaoDesfeito(tarefa)} hide={!tarefa.feito} />
+                    <IconButton style="danger" icon="trash-o" onClick={() => props.funcaoRemover(tarefa)} hide={!tarefa.feito} />
                 </td>
             </tr>
         ));

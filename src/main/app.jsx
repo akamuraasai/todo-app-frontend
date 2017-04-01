@@ -1,5 +1,6 @@
 import 'bootstrap_min_css';
 import 'fontawesome_min_css';
+import '../template/custom.css';
 
 import React from 'react';
 import Menu from '../template/menu';

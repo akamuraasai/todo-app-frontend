@@ -1,0 +1,8 @@
+.tarefa-concluida {
+    text-decoration: line-through;
+    color: #777777;
+}
+
+.btm {
+    margin-right: 5px;
+}

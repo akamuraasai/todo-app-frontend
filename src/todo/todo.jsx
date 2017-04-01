@@ -15,6 +15,8 @@ export default class Todo extends Component {
         this.adicionaTarefa = this.adicionaTarefa.bind(this);
         this.aceitaMudanca = this.aceitaMudanca.bind(this);
         this.removeTarefa = this.removeTarefa.bind(this);
+        this.marcaFeito = this.marcaFeito.bind(this);
+        this.marcaDesfeito = this.marcaDesfeito.bind(this);
 
         this.refresh();
     }
@@ -39,12 +41,22 @@ export default class Todo extends Component {
              .then(dados => this.refresh());
     }
 
+    marcaFeito(tarefa) {
+        Axios.put(`${URL}/${tarefa._id}`, { ...tarefa, feito: true })
+             .then(dados => this.refresh());
+    }
+
+    marcaDesfeito(tarefa) {
+        Axios.put(`${URL}/${tarefa._id}`, { ...tarefa, feito: false })
+            .then(dados => this.refresh());
+    }
+
     render() {
         return (
             <div>
                 <PageHeader titulo="Tarefas" subtitulo="Cadastro"/>
                 <TodoForm descricao={this.state.descricao} funcaoMudanca={this.aceitaMudanca} funcaoAdd={this.adicionaTarefa}/>
-                <TodoList funcaoRemover={this.removeTarefa} lista={this.state.lista} />
+                <TodoList funcaoFeito={this.marcaFeito} funcaoDesfeito={this.marcaDesfeito} funcaoRemover={this.removeTarefa} lista={this.state.lista} />
             </div>
         )
     }
